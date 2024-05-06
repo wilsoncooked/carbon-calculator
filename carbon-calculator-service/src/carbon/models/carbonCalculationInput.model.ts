@@ -1,10 +1,9 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@ObjectType('CarbonCalculation', { description: 'Carbon calcuation' })
-export class Carbon {
-  @Field(() => ID)
-  id: string;
-
+@InputType('CreateCarbonCalculationInput', {
+  description: 'Carbon calculation input',
+})
+export class CarbonInput {
   @Field()
   sessionId: string;
 
@@ -37,7 +36,4 @@ export class Carbon {
 
   @Field()
   electricityEmissions: number;
-
-  @Field(() => Date)
-  creationDate: Date;
 }

@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Carbon } from './models/carbonCalculation.model';
 import { CarbonService } from './carbon.service';
+import { CarbonInput } from './models/carbonCalculationInput.model';
 
 @Resolver((of) => Carbon)
 export class CarbonResolver {
@@ -12,7 +13,7 @@ export class CarbonResolver {
   }
 
   @Mutation((returns) => Carbon)
-  async createCarbonCalcuation(@Args('Carbon') carbon: Carbon) {
-    return this.carbonService.createCarbonCalcuation(carbon);
+  async createCarbonCalcuation(@Args('input') carbonInput: CarbonInput) {
+    return this.carbonService.createCarbonCalculation(carbonInput);
   }
 }

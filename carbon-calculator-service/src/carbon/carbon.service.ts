@@ -2,15 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Carbon } from './models/carbonCalculation.model';
 import { Repository } from 'typeorm';
-
-const mockCarbon: Carbon = {
-  id: '1',
-  sessionId: 'abc123',
-  numPeopleLiving: 4,
-  electricityConsumption: 500, // kWh per month
-  electricityEmissions: 100, // kgCO2e per month
-  creationDate: new Date('2024-05-06T12:00:00Z'),
-};
+import { CarbonInput } from './models/carbonCalculationInput.model';
 
 @Injectable()
 export class CarbonService {
@@ -22,7 +14,15 @@ export class CarbonService {
   //   private readonly carbonRepository: Repository<Carbon>,
   // ) {}
 
-  async findAll(): Promise<Carbon[]> {
+  async findAll(): Promise<Partial<Carbon>[]> {
+    const mockCarbon: Partial<Carbon> = {
+      id: '1',
+      sessionId: 'abc123',
+      numPeopleLiving: 4,
+      electricityConsumption: 500, // kWh per month
+      electricityEmissions: 100, // kgCO2e per month
+      creationDate: new Date('2024-05-06T12:00:00Z'),
+    };
     try {
       this.logger.log('Finding all carbon calculatons');
       // return await this.carbonRepository.find();
@@ -35,7 +35,24 @@ export class CarbonService {
     }
   }
 
-  async createCarbonCalcuation(carbon: Carbon): Promise<Carbon> {
+  async createCarbonCalculation(
+    carbonInput: CarbonInput,
+  ): Promise<CarbonInput> {
+    const mockCarbon: Carbon = {
+      id: '1',
+      sessionId: 'abc123',
+      commuteDistance: 0,
+      commuteWeeklyFrequency: 0,
+      commuteMode: '',
+      commuteEmissions: 0,
+      flightsPerYear: 0,
+      averageFlightDurationHours: 0,
+      airTravelEmissions: 0,
+      numPeopleLiving: 4,
+      electricityConsumption: 500, // kWh per month
+      electricityEmissions: 100, // kgCO2e per month
+      creationDate: new Date('2024-05-06T12:00:00Z'),
+    };
     this.logger.log('Creating a new recipe');
     // const newCalcuation = this.carbonRepository.create({
     //   ...carbon,
