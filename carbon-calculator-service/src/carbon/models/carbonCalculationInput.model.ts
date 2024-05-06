@@ -17,23 +17,14 @@ export class CarbonInput {
   commuteMode: string;
 
   @Field()
-  commuteEmissions: number;
-
-  @Field()
   flightsPerYear: number;
 
   @Field()
   averageFlightDurationHours: number;
 
   @Field()
-  airTravelEmissions: number;
-
-  @Field()
   numPeopleLiving: number;
 
   @Field()
   electricityConsumption: number;
-
-  @Field()
-  electricityEmissions: number;
 }

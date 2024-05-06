@@ -31,6 +31,9 @@ export class CarbonService {
     this.logger.log('Creating a new recipe');
     const newCalcuation = this.carbonRepository.create({
       ...carbonInput,
+      electricityEmissions: carbonInput.electricityConsumption * 0.5,
+      commuteEmissions: carbonInput.commuteDistance * 0.5,
+      airTravelEmissions: carbonInput.flightsPerYear * 0.5,
       creationDate: new Date(),
     });
     this.logger.log(`New carbon calcuation created`);

@@ -21,14 +21,11 @@ type CarbonCalculation {
 
 """Carbon calculation input"""
 input CreateCarbonCalculationInput {
-  airTravelEmissions: Float!
   averageFlightDurationHours: Float!
   commuteDistance: Float!
-  commuteEmissions: Float!
   commuteMode: String!
   commuteWeeklyFrequency: Float!
   electricityConsumption: Float!
-  electricityEmissions: Float!
   flightsPerYear: Float!
   numPeopleLiving: Float!
   sessionId: String!

@@ -34,26 +34,20 @@ describe('CarbonService', () => {
 
   describe('createCarbonCalculation', () => {
     it('should create a carbon calculation', async () => {
-      const carbonInput: Carbon = {
-        id: '1',
-        creationDate: new Date('2024-05-06T12:00:00Z'),
+      const carbonInput: CarbonInput = {
         sessionId: 'abc123',
         commuteDistance: 0,
         commuteWeeklyFrequency: 0,
         commuteMode: '',
-        commuteEmissions: 0,
         flightsPerYear: 0,
         averageFlightDurationHours: 0,
-        airTravelEmissions: 0,
         numPeopleLiving: 4,
         electricityConsumption: 500, // kWh per month
-        electricityEmissions: 100, // kgCO2e per month
       };
       const result = await service.createCarbonCalculation(carbonInput);
       expect(result).toBeDefined();
       expect(result).toHaveProperty('numPeopleLiving', 4);
       expect(result).toHaveProperty('electricityConsumption', 500);
-      expect(result).toHaveProperty('electricityEmissions', 100);
     });
   });
 });
