@@ -1,0 +1,38 @@
+version: '3'
+services:
+  frontend:
+    build: ./carbon-calculator-app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+  backend:
+    build: ./carbon-calculator-service
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+    networks:
+      - app-network
+    volumes:
+      - ./carbon-calculator-service:/app
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
