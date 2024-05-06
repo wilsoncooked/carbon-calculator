@@ -8,8 +8,13 @@ export class CarbonResolver {
   constructor(private carbonService: CarbonService) {}
 
   @Query((returns) => [Carbon])
-  async Carbon() {
+  async getCarbon() {
     return this.carbonService.findAll();
+  }
+
+  @Query((returns) => [Carbon])
+  async getCarbonBySessionId(@Args('sessionId') sessionId: string) {
+    return this.carbonService.findBySessionId(sessionId);
   }
 
   @Mutation((returns) => Carbon)

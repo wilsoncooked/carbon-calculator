@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import {
   Form,
   FormField,
@@ -9,19 +9,19 @@ import {
   FormControl,
   FormMessage,
   FormDescription,
-} from "@/components/ui/form";
+} from "../components/ui/form";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
+import { Input } from "../components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { CREATE_CARBON_CALCULATION } from "@/graphql/mutations";
+} from "../components/ui/select";
+import { CREATE_CARBON_CALCULATION } from "../graphql/mutations";
 import { useNavigate } from "react-router-dom";
 
 const ERROR_MESSAGES = {

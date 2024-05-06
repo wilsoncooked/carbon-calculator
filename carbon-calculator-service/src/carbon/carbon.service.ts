@@ -25,6 +25,29 @@ export class CarbonService {
     }
   }
 
+  async findBySessionId(sessionId: string): Promise<Partial<Carbon>[]> {
+    try {
+      this.logger.log(
+        `Finding carbon calculations by session id: ${sessionId}`,
+      );
+      const results = await this.carbonRepository.findOne({
+        where: { sessionId },
+      });
+      if (!results) {
+        this.logger.error(`Session with id: ${sessionId} not found`);
+        throw new Error('Session not found');
+      }
+      return [results];
+    } catch (error) {
+      this.logger.error(
+        `Error occurred while finding carbon calculations by session id: ${error.message}`,
+      );
+      throw new Error(
+        'Error occurred while finding carbon calculations by session id',
+      );
+    }
+  }
+
   async createCarbonCalculation(
     carbonInput: CarbonInput,
   ): Promise<CarbonInput> {
@@ -33,7 +56,10 @@ export class CarbonService {
       ...carbonInput,
       electricityEmissions: carbonInput.electricityConsumption * 0.5,
       commuteEmissions: carbonInput.commuteDistance * 0.5,
-      airTravelEmissions: carbonInput.flightsPerYear * 0.5,
+      airTravelEmissions:
+        carbonInput.averageFlightDurationHours *
+        800 *
+        carbonInput.flightsPerYear,
       creationDate: new Date(),
     });
     this.logger.log(`New carbon calcuation created`);
