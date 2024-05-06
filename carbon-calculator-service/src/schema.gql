@@ -1,0 +1,36 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Carbon calcuation"""
+type CarbonCalculation {
+  creationDate: DateTime!
+  electricityConsumption: Float!
+  electricityEmissions: Float!
+  id: ID!
+  numPeopleLiving: Float!
+  sessionId: String!
+}
+
+"""Carbon calculation input"""
+input CreateCarbonCalculationInput {
+  creationDate: DateTime!
+  electricityConsumption: Float!
+  electricityEmissions: Float!
+  id: ID!
+  numPeopleLiving: Float!
+  sessionId: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createCarbonCalcuation(Carbon: CreateCarbonCalculationInput!): CarbonCalculation!
+}
+
+type Query {
+  Carbon: [CarbonCalculation!]!
+}
