@@ -32,6 +32,7 @@ export class CarbonService {
       );
       const results = await this.carbonRepository.findOne({
         where: { sessionId },
+        order: { creationDate: 'DESC' },
       });
       if (!results) {
         this.logger.error(`Session with id: ${sessionId} not found`);
@@ -52,14 +53,43 @@ export class CarbonService {
     carbonInput: CarbonInput,
   ): Promise<CarbonInput> {
     this.logger.log('Creating a new recipe');
+
+    const commuteModes = {
+      CAR: { name: 'Car', emissionPerKm: 0.2 },
+      BUS: { name: 'Bus', emissionPerKm: 0.05 },
+      TRAIN: { name: 'Train', emissionPerKm: 0.03 },
+      BIKE: { name: 'Bike', emissionPerKm: 0 },
+      WALK: { name: 'Walk', emissionPerKm: 0 },
+    };
+
+    const calculateYearlyCommuteEmissions = (
+      mode: string,
+      dailyDistanceInKm: number,
+      weeklyFrequency: number,
+    ): number => {
+      const commuteMode = commuteModes[mode];
+      if (!commuteMode) {
+        throw new Error(`Invalid commute mode: ${mode}`);
+      }
+
+      const emissionPerKm = commuteMode.emissionPerKm;
+      const weeklyDistance = dailyDistanceInKm * 7;
+      const yearlyDistance = weeklyDistance * weeklyFrequency * 52;
+      return emissionPerKm * yearlyDistance;
+    };
+
     const newCalcuation = this.carbonRepository.create({
       ...carbonInput,
-      electricityEmissions: carbonInput.electricityConsumption * 0.5,
-      commuteEmissions: carbonInput.commuteDistance * 0.5,
+      electricityEmissions: carbonInput.electricityConsumption * 12 * 0.5,
+      commuteEmissions: calculateYearlyCommuteEmissions(
+        carbonInput.commuteMode,
+        carbonInput.commuteDistance,
+        carbonInput.commuteWeeklyFrequency,
+      ),
       airTravelEmissions:
         carbonInput.averageFlightDurationHours *
-        800 *
-        carbonInput.flightsPerYear,
+        carbonInput.flightsPerYear *
+        2.24,
       creationDate: new Date(),
     });
     this.logger.log(`New carbon calcuation created`);

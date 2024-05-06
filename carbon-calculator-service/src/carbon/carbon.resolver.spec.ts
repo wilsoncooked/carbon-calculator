@@ -49,7 +49,7 @@ describe('CarbonResolver', () => {
       const findAllSpy = jest
         .spyOn(service, 'findAll')
         .mockResolvedValueOnce([mockCarbon]);
-      const result = await resolver.Carbon();
+      const result = await resolver.getCarbon();
       expect(findAllSpy).toHaveBeenCalled();
       expect(result).toEqual([mockCarbon]);
     });
