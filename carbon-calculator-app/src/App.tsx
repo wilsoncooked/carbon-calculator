@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <>
-      <main className="p-10">
+      <main className="p-10 flex justify-center">
         <RouterProvider router={router} />
       </main>
     </>

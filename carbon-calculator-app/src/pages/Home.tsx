@@ -66,7 +66,12 @@ export const Home = () => {
   const navigate = useNavigate();
   const [sessionId, setSessionId] = useState<string>();
   const [createCarbonCalculation, { loading }] = useMutation(
-    CREATE_CARBON_CALCULATION
+    CREATE_CARBON_CALCULATION,
+    {
+      onCompleted: () => {
+        navigate("/results");
+      },
+    }
   );
 
   useEffect(() => {
@@ -91,7 +96,7 @@ export const Home = () => {
 
   const onSubmit = async (values: FieldValues) => {
     try {
-      const result = await createCarbonCalculation({
+      await createCarbonCalculation({
         variables: {
           input: {
             sessionId: sessionId,
@@ -105,18 +110,20 @@ export const Home = () => {
           },
         },
       });
-      if (result.data) {
-        navigate("/results");
-      }
     } catch (error) {
       console.error("Mutation error:", error);
     }
   };
 
   return (
-    <div>
+    <div className="max-w-4xl w-full">
+      <h1 className="text-2xl my-2">Carbon Calculator</h1>
+      <p className="my-2 w-3/4">
+        This calculator will help you estimate your carbon footprint based on
+        your electricity consumption, commuting habits, and flights.
+      </p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 my-8">
           <h3>Electricity Consumption</h3>
           <div className="flex flex-col md:flex-row gap-4">
             <FormField
@@ -180,7 +187,7 @@ export const Home = () => {
                     </FormControl>
                     <SelectContent>
                       {Object.values(CommuteModes).map((mode, index) => (
-                        <SelectItem key={index} value={mode}>
+                        <SelectItem key={index} value={mode.toUpperCase()}>
                           {mode}
                         </SelectItem>
                       ))}

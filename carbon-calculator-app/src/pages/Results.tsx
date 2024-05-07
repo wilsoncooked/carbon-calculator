@@ -64,7 +64,7 @@ export const Results = () => {
   }
 
   return (
-    <div className="flex items-start	 flex-col gap-4">
+    <div className="flex items-start flex-col gap-4 max-w-4xl w-full">
       <h2>Your Carbon emissions:</h2>
       <Table>
         <TableHeader>
