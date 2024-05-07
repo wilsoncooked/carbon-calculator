@@ -1,13 +1,13 @@
 version: '3'
 services:
-  # frontend:
-  #   build: ./carbon-calculator-app
-  #   ports:
-  #     - "5173:5173"
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app-network
+  frontend:
+    build: ./carbon-calculator-app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - app-network
   backend:
     build: ./carbon-calculator-service
     ports:
